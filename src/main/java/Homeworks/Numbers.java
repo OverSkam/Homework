@@ -1,5 +1,6 @@
 package Homeworks;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -22,9 +23,11 @@ public class Numbers {
         String name = sc.nextLine();
         System.out.printf("%s, try to guess when %s happened\n", name, dates[0][randomDateIndex]);
 
+        int guess = 0;
+        int arraySize = 0;
+        int[] oldArray = new int[0];
 
-        while (true){
-            int guess;
+        while (guess != date){
 
             try {
                 guess = Integer.parseInt(sc.nextLine());
@@ -33,15 +36,33 @@ public class Numbers {
                 continue;
             }
 
-            if (guess > date)
-                System.out.println("The event happened earlier");
+            int[] newArray = Arrays.copyOf(oldArray, oldArray.length + 1);
+            newArray[oldArray.length] = guess;
+            oldArray = Arrays.copyOf(newArray, newArray.length);
+
+            String result = (guess > date) ? "The event happened earlier" : "The event happened later";
+
+            if (guess != date)
+                System.out.println(result);
             else
-                if (guess < date)
-                    System.out.println("The event happened later");
-                else {
-                    System.out.printf("Congratulations, %s!", name);
-                    break;
-                }
+                break;
         }
+        System.out.printf("Congratulations, %s!", name);
+
+        for (int i = 0; i < oldArray.length - 1; i++) {
+            for (int j = 0; j < oldArray.length - i - 1; j++) {
+                if (oldArray[j] > oldArray[j + 1]) {
+                    int temp = oldArray[j];
+                    oldArray[j] = oldArray[j + 1];
+                    oldArray[j + 1] = temp;
+                }
+            }
+        }
+
+        System.out.println();
+        System.out.print("Your numbers: ");
+
+        for (int a : oldArray)
+            System.out.print(a + " ");
     }
 }
