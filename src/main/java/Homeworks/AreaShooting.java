@@ -47,8 +47,10 @@ public class AreaShooting {
         int y = rand.nextInt(5);
         int playersX = -1, playersY = -1;
 
-        System.out.println(x);
-        System.out.println(y);
+        //to prove it's possible to guess
+        System.out.printf("For tester help: x: %d, y: %d", x + 1, y + 1);
+        System.out.println();
+        System.out.println();
 
         System.out.println("All Set. Get ready to rumble!");
         printMatrix(a);
@@ -81,7 +83,7 @@ public class AreaShooting {
             if (!checkValue(playersY))
                 continue;
 
-            if (playersX != x && playersY != y){
+            if (playersX != x || playersY != y){
                 a[playersX][playersY] = true;
                 printMatrix(a);
                 System.out.println("You have missed");
