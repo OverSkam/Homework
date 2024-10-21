@@ -1,12 +1,11 @@
-package Homeworks.happyFamily;
+package Homeworks.happyFamily2;
 
 import java.util.ArrayList;
 
 public class Family {
     private Human father;
     private Human mother;
-    private Pet pet;
-    private Human[] children = new Human[0];
+    private ArrayList<Human> children = new ArrayList<Human>();
     private int countOfMembers = 2;
 
     public Family(Human mother, Human father) {
@@ -16,39 +15,26 @@ public class Family {
 
     public Human getFather() { return father; }
     public Human getMother() { return mother; }
-    public Pet getPet() { return pet; }
-    public Human[] getChildren() { return children; }
-    public void setFather(Human father) { this.father = father; this.father.setFamily(this); }
-    public void setMother(Human mother) { this.mother = mother; this.mother.setFamily(this);}
-    public void setPet(Pet pet) { this.pet = pet; }
-    public void addChild(Human child) { children = addChildPrivate(child); child.setFamily(this);}
-    public void removeChild(Human child) { children = removeChildPrivate(child);}
+    public ArrayList<Human> getChildren() { return children; }
+    public void setFather(Human father) { this.father = father; }
+    public void setMother(Human mother) { this.mother = mother; }
+    public void setChildren(ArrayList<Human> children) { this.children = children; countOfMembers = 2 + children.size(); }
 
-    private Human[] addChildPrivate(Human child) {
-        int newLength = this.children.length;
-        Human[] newChildren = new Human[newLength + 1];
-        for (int i = 0; i < newLength; i++)
-            newChildren[i] = this.children[i];
-        newChildren[newLength] = child;
+    public void addChild(Human child) {
+        children.add(child);
         countOfMembers++;
-        return newChildren;
+        child.setMother(mother);
+        child.setFather(father);
+        child.setFamily(this);
     }
 
     public Human getChild(int i) {
-        return children[i];
+        return children.get(i);
     }
 
-    private Human[] removeChildPrivate(Human child) {
-        int newLength = this.children.length;
-        Human[] newChildren = new Human[newLength - 1];
-        for (int i = 0; i < newLength; i++) {
-            if (child.equals(this.children[i]))
-                continue;
-            else
-                newChildren[i] = this.children[i];
-        }
-            countOfMembers--;
-        return newChildren;
+    public void removeChild(Human child) {
+        children.remove(child);
+        countOfMembers--;
     }
 
     public int countFamily(){

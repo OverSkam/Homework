@@ -1,4 +1,4 @@
-package Homeworks.happyFamily;
+package Homeworks.happyFamily2;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ public class Pet {
     private String species;
     private int age;
     private int trickLevel;
-    private String[] habits = new String[0];
+    private ArrayList<String> habits = new ArrayList<>();
 
     public Pet(String nickname, String species, int age, int trickLevel) {
         this.nickname = nickname;
@@ -16,7 +16,7 @@ public class Pet {
         this.trickLevel = trickLevel;
     }
 
-    public Pet(String nickname, String species, int age, int trickLevel, String[] habits) {
+    public Pet(String nickname, String species, int age, int trickLevel, ArrayList<String> habits) {
         this.nickname = nickname;
         this.species = species;
         this.age = age;
@@ -51,48 +51,19 @@ public class Pet {
 
     @Override
     public String toString() {
-        String out = "%s {nickname: '%s', age: %s, trickLevel: %s"
-                .formatted(species, nickname, age, trickLevel);
-        if (habits.length > 0) {
-            out += ", habits:";
-            for (String habit : habits)
-                out += " %s".formatted(habit);
-        }
-        out += " }";
-
-        return out;
+        return "%s {nickname: '%s', age: %s, trickLevel: %s, habits: %s}".formatted(species, nickname, age, trickLevel, habits.toString());
     }
 
     public void setNickname(String nickname) { this.nickname = nickname; }
     public void setSpecies(String species) { this.species = species; }
     public void setAge(int age) { this.age = age; }
     public void setTrickLevel(int trickLevel) { this.trickLevel = trickLevel; }
-    public void addHabit(String habit){ habits = addHabitPrivate(habit); }
-    public void removeHabit(String habit){ habits = removeHabitPrivate(habit); }
+    public void addHabit(String habit){ habits.add(habit); }
+    public void removeHabit(String habit){ habits.remove(habit); }
     public String getNickname() { return nickname; }
     public String getSpecies() { return species;}
     public int getAge() { return age; }
     public int getTrickLevel() { return trickLevel; }
-    public String[] getHabits() { return habits;}
-
-    private String[] addHabitPrivate(String habit){
-        int newLength = this.habits.length;
-        String[] newSchedule = new String[newLength + 1];
-        for (int i = 0; i < newLength; i++)
-            newSchedule[i] = this.habits[i];
-        newSchedule[newLength] = habit;
-        return newSchedule;
-    }
-
-    private String[] removeHabitPrivate(String task){
-        int newLength = this.habits.length;
-        String[] newSchedule = new String[newLength - 1];
-        for (int i = 0; i < newLength; i++)
-            if (task.equals(this.habits[i]))
-                continue;
-            else
-                newSchedule[i] = this.habits[i];
-        return newSchedule;
-    }
+    public ArrayList<String> getHabits() { return habits;}
 
 }
