@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class HappyFamily {
     public static void main(String[] args) {
 
+        //Переробив всі лісти на масиви та переніс поля з Human в Family
+
         Pet pet = new Pet("Murzik", "cat", 10, 28);
         Pet pet2 = new Pet("Gold", "dog", 2, 87);
         Pet pet3 = new Pet("Bor", "cat", 8, 16);
