@@ -24,6 +24,8 @@ public class Pet {
         this.habits = habits;
     }
 
+    public Pet(){}
+
     public void eat(){
         System.out.println("I'm eating");
     }
@@ -36,8 +38,20 @@ public class Pet {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Pet that = (Pet) o;
+        if (!this.nickname.equals(that.nickname)) return false;
+        if (!this.species.equals(that.species)) return false;
+        if (this.age != that.age) return false;
+        if (this.trickLevel != that.trickLevel) return false;
+        return true;
+    }
+
+    @Override
     public String toString() {
-        return "{nickname: %s, species: %s, age: %s, trickLevel: %s, habits: %s}".formatted(nickname, species, age, trickLevel, habits.toString());
+        return "%s {nickname: '%s', age: %s, trickLevel: %s, habits: %s}".formatted(species, nickname, age, trickLevel, habits.toString());
     }
 
     public void setNickname(String nickname) { this.nickname = nickname; }
