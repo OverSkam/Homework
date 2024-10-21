@@ -56,4 +56,15 @@ public class Family {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Family that = (Family) o;
+        if (!father.equals(that.father)) return false;
+        if (!mother.equals(that.mother)) return false;
+        if (!children.equals(that.children)) return false;
+        return true;
+    }
+
 }

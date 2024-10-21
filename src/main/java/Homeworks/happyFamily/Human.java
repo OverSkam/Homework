@@ -61,8 +61,8 @@ public class Human {
     public void setMother(Human mother) { this.mother = mother; }
     public Human getFather() { return father; }
     public void setFather(Human father) { this.father = father; }
-    public Pet getPets(){ return pet;}
-    public void setPets(ArrayList<Pet> pets){ this.pet = pet;}
+    public Pet getPet(){ return pet;}
+    public void setPet(Pet pet){ this.pet = pet;}
     public Family getFamily(){ return family;}
     public void setFamily(Family family) { this.family = family;}
     public ArrayList<String> getSchedule() { return schedule; }

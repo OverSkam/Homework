@@ -42,5 +42,7 @@ public class HappyFamily {
         newFamily.addChild(child);
         //showing that child didn't have parents but when he got into a family he got them
         System.out.println(newFamily.getChild(0).getFather().toString());
+
+        System.out.println(oldMan.getPet().equals(man.getPet()));
     }
 }
