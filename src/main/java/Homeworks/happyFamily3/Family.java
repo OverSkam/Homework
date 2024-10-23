@@ -1,4 +1,4 @@
-package Homeworks.happyFamily2;
+package Homeworks.happyFamily3;
 
 public class Family {
     private Human father;
