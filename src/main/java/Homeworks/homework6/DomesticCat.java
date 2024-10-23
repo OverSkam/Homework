@@ -1,4 +1,4 @@
-package Homeworks.happyFamily3;
+package Homeworks.homework6;
 
 public class DomesticCat extends Pet implements mb{
 

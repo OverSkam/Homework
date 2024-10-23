@@ -1,4 +1,4 @@
-package Homeworks.happyFamily3;
+package Homeworks.homework6;
 
 public class Man extends Human{
     public Man(String name, String surname, int yearOfBirth, int iq) {
