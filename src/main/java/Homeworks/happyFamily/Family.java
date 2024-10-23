@@ -66,6 +66,9 @@ public class Family {
             for (Human child : children)
                 out += "'%s' ".formatted(child.getName());
 
+            if (pet != null)
+                out += " pet: %s ".formatted(pet.toString());
+
             return out;
         }
     }

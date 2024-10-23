@@ -1,11 +1,10 @@
 package Homeworks.happyFamily2;
 
-import java.util.ArrayList;
-
 public class Family {
     private Human father;
     private Human mother;
-    private ArrayList<Human> children = new ArrayList<Human>();
+    private Pet pet;
+    private Human[] children = new Human[0];
     private int countOfMembers = 2;
 
     public Family(Human mother, Human father) {
@@ -15,26 +14,63 @@ public class Family {
 
     public Human getFather() { return father; }
     public Human getMother() { return mother; }
-    public ArrayList<Human> getChildren() { return children; }
-    public void setFather(Human father) { this.father = father; }
-    public void setMother(Human mother) { this.mother = mother; }
-    public void setChildren(ArrayList<Human> children) { this.children = children; countOfMembers = 2 + children.size(); }
+    public Pet getPet() { return pet; }
+    public Human[] getChildren() { return children; }
+    public void setFather(Human father) { this.father = father; this.father.setFamily(this); }
+    public void setMother(Human mother) { this.mother = mother; this.mother.setFamily(this);}
+    public void setPet(Pet pet) { this.pet = pet; }
+    public void addChild(Human child) { children = addChildPrivate(child); child.setFamily(this);}
+    public void removeChild(Human child) { children = removeChildPrivate(child);}
+    public void removeChild(int index) { children = removeChildPrivate(index);}
 
-    public void addChild(Human child) {
-        children.add(child);
+    private Human[] addChildPrivate(Human child) {
+        int newLength = this.children.length;
+        Human[] newChildren = new Human[newLength + 1];
+        for (int i = 0; i < newLength; i++)
+            newChildren[i] = this.children[i];
+        newChildren[newLength] = child;
         countOfMembers++;
-        child.setMother(mother);
-        child.setFather(father);
-        child.setFamily(this);
+        return newChildren;
     }
 
     public Human getChild(int i) {
-        return children.get(i);
+        return children[i];
     }
 
-    public void removeChild(Human child) {
-        children.remove(child);
-        countOfMembers--;
+    private Human[] removeChildPrivate(Human child) {
+        int newLength = this.children.length;
+        for (int i = 0; i < this.children.length; i++) {
+            if (child.equals(this.children[i]))
+            {
+                Human[] newChildren = new Human[newLength - 1];
+                for (int j = 0; j < newLength; j++) {
+                    if (child.equals(this.children[j]))
+                        continue;
+                    else
+                        newChildren[j] = this.children[j];
+                }
+                countOfMembers--;
+                return newChildren;
+            }
+        }
+        return this.children;
+    }
+
+    private Human[] removeChildPrivate(int index) {
+        int newLength = this.children.length;
+        if (index >= 0 && index < newLength)
+        {
+            Human[] newChildren = new Human[newLength - 1];
+            for (int j = 0; j < newLength; j++) {
+                if (j == index)
+                    continue;
+                else
+                    newChildren[j] = this.children[j];
+            }
+            countOfMembers--;
+            return newChildren;
+        }
+        return this.children;
     }
 
     public int countFamily(){
@@ -47,10 +83,13 @@ public class Family {
             return "Family: mother: '%s %s', father: '%s %s'"
                     .formatted(mother.getName(), mother.getSurname(), father.getName(), father.getSurname());
         else {
-            String out = "Family: mother: '%s %s', father: '%s %s', children: "
+            String out = "Family: mother: '%s %s', father: '%s %s', children:"
                     .formatted(mother.getName(), mother.getSurname(), father.getName(), father.getSurname());
             for (Human child : children)
-                out += "'%s' ".formatted(child.getName());
+                out += " '%s'".formatted(child.getName());
+
+            if (pet != null)
+                out += " pet: %s ".formatted(pet.toString());
 
             return out;
         }
