@@ -1,8 +1,8 @@
 package Homeworks.homework8;
 
 public final class Woman extends Human {
-    public Woman(String name, String surname, long yearOfBirth, int iq) {
-        super(name, surname, yearOfBirth, iq);
+    public Woman(String name, String surname, long birthDate, int iq) {
+        super(name, surname, birthDate, iq);
     }
     public Woman(String name, String surname, String stringDate, int iq) {
         super(name, surname, stringDate, iq);

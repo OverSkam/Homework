@@ -25,19 +25,19 @@ enum Days{
 public class Human {
     private String name;
     private String surname;
-    private long yearOfBirth;
+    private long birthDate;
     private String stringDate;
     private int iq;
     private Family family;
     private Map<Days, String> schedule = new HashMap<>();
 
-    public Human(String name, String surname, long yearOfBirth, int iq) {
+    public Human(String name, String surname, long birthDate, int iq) {
         this.name = name;
         this.surname = surname;
-        this.yearOfBirth = yearOfBirth;
+        this.birthDate = birthDate;
         this.iq = iq;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = new Date(yearOfBirth);
+        Date date = new Date(birthDate);
         this.stringDate = sdf.format(date);;
     }
 
@@ -53,16 +53,16 @@ public class Human {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        this.yearOfBirth = date.getTime();
-         System.out.println(yearOfBirth);
+        this.birthDate = date.getTime();
+         System.out.println(birthDate);
     }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getSurname() { return surname; }
     public void setSurname(String surname) { this.surname = surname; }
-    public long getYearOfBirth() { return yearOfBirth; }
-    public void setYearOfBirth(long yearOfBirth) { this.yearOfBirth = yearOfBirth; }
+    public long getYearOfBirth() { return birthDate; }
+    public void setYearOfBirth(long birthDate) { this.birthDate = birthDate; }
     public int getIq() { return iq; }
     public void setIq(int iq) { this.iq = iq; }
     public Human getMother() { return family.getMother();}
@@ -107,18 +107,15 @@ public class Human {
 
     public void describeAge(){
         Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(yearOfBirth);
+        c.setTimeInMillis(birthDate);
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
         LocalDate now = LocalDate.now();
         LocalDate birthDate = LocalDate.of(year, month, day);
         Period period = Period.between(birthDate, now);
-
         String s = "Years: %d, Months: %d, Days: %d"
                 .formatted(period.getYears(), period.getMonths(), period.getDays());
-
-        System.out.println(s);
     }
 
     @Override
@@ -151,7 +148,7 @@ public class Human {
         if (o == null) return false;
         if (!(o instanceof Human)) return false;
         Human that = (Human) o;
-        if (this.yearOfBirth != that.yearOfBirth) return false;
+        if (this.birthDate != that.birthDate) return false;
         if (this.iq != that.iq) return false;
         if (!this.family.getMother().equals(that.family.getMother())) return false;
         if (!this.family.getFather().equals(that.family.getFather())) return false;
