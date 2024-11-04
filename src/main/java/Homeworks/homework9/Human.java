@@ -1,13 +1,12 @@
-package Homeworks.homework8;
+package Homeworks.homework9;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 enum Days{
@@ -54,7 +53,6 @@ public class Human {
             throw new RuntimeException(e);
         }
         this.birthDate = date.getTime();
-         System.out.println(birthDate);
     }
 
     public String getName() { return name; }

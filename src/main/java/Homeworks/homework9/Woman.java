@@ -1,4 +1,4 @@
-package Homeworks.homework8;
+package Homeworks.homework9;
 
 public final class Woman extends Human {
     public Woman(String name, String surname, long birthDate, int iq) {
