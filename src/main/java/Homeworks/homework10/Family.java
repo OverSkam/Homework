@@ -1,12 +1,6 @@
-package Homeworks.homework9;
+package Homeworks.homework10;
 
-import Homeworks.homework9.FamilyService;
-
-import java.sql.Array;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Family {
     private Human father;
@@ -57,6 +51,23 @@ public class Family {
             }
             else
                 i++;
+        }
+    }
+
+    public String prettyFormat(){
+        if (countOfMembers == 2)
+            return "family: mother: '%s %s', father: '%s %s'"
+                    .formatted(mother.getName(), mother.getSurname(), father.getName(), father.getSurname());
+        else {
+            String out = "Family: mother: '%s %s', father: '%s %s', children:"
+                    .formatted(mother.getName(), mother.getSurname(), father.getName(), father.getSurname());
+            for (Human child : children)
+                out += " '%s'".formatted(child.getName());
+
+            if (pet != null)
+                out += " pet: %s ".formatted(pet.toString());
+
+            return out;
         }
     }
 

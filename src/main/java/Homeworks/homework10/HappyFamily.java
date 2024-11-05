@@ -1,4 +1,4 @@
-package Homeworks.homework9;
+package Homeworks.homework10;
 
 public class HappyFamily {
     public static void main(String[] args) {
@@ -7,13 +7,12 @@ public class HappyFamily {
         Man human2 = new Man("J1", "G1", "2005/10/10", 100);
         Man child = new Man("j", "g", "2010/10/10", 100);
         Family family = new Family(human1, human2);
+
         family.addChild(child);
         family.addChild(human2);
 
         FamilyService tracker = new FamilyService();
         tracker.displayAllFamilies();
-        System.out.println(tracker.countFamiliesWithMemberNumber(3));
-        family.deleteAllChildrenOlderThan(16);
-        System.out.println(family.toString());
+
     }
 }
