@@ -15,7 +15,7 @@ public class FamilyService {
         }
     }
 
-    public void getFamiliesBiggerThan(int x){
+    public void getFamiliesMoreThan(int x){
         families.stream()
                 .filter(k -> k.countMembers() > x)
                 .forEach(System.out::println);

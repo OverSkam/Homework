@@ -1,5 +1,7 @@
 package Homeworks.homework10;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -31,7 +33,6 @@ public class ConsoleApp {
             new Woman("Cm", "Loop", "1981/15/8", 111),
             new Woman("Marci", "Foor", "1980/10/11", 112)
     };
-
 
 
     Scanner sc = new Scanner(System.in);
@@ -68,7 +69,25 @@ public class ConsoleApp {
         return number;
     }
 
-    private Human readHuman(String human){
+    private int readIndex(int min, int max) {
+        int number;
+        while (true) {
+            try {
+                number = sc.nextInt() - 1;
+                if (number < min || number > max) {
+                    System.out.println("Number is incorrect type it again");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Number is incorrect type it again");
+            }
+        }
+        return number;
+    }
+
+
+    private Human readHuman(String human) {
         System.out.printf("Enter %s's name: ".formatted(human));
         String name = sc.next();
         System.out.printf("Enter %s's surname: ".formatted(human));
@@ -99,14 +118,45 @@ public class ConsoleApp {
     }
 
     private Family createRandomFamily() {
-        Family family = new Family(randomWoman[rand.nextInt(8)], randomMan[rand.nextInt(7)]);
+        Family family = new Family(randomWoman[rand.nextInt(7)], randomMan[rand.nextInt(6)]);
         System.out.println("Family created: ");
         System.out.println(family.prettyFormat());
         return family;
     }
 
+    private void bornChild(int index) {
+        System.out.println("Who do you want to adopt? 1 - boy, 2 - girl");
+        int i = readInt(1, 2);
+        String gender = i == 1 ? "boy" : "girl";
+        System.out.printf("Enter %s's name: ".formatted(gender));
+        String name = sc.next();
+        String surname = FamilyService.families.get(index).getFather().getSurname();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String birthDate = LocalDate.now().format(formatter);
+        int iq = rand.nextInt(100) + 70;
+        FamilyService.families.get(index).addChild(
+                switch (gender) {
+                    case "boy" -> new Man(name, surname, birthDate, iq);
+                    case "girl" -> new Woman(name, surname, birthDate, iq);
+                    default -> new Human(name, surname, birthDate, iq);
+                });
+    }
+
+    private void adoptChild(int index) {
+        System.out.println("Who do you want to born? 1 - boy, 2 - girl");
+        int i = readInt(1, 2);
+        String gender = i == 1 ? "boy" : "girl";
+        FamilyService.families.get(index).addChild(readHuman(gender));
+    }
+
+    private void deleteOlderThan(int age){
+        for (Family family : FamilyService.families)
+            family.deleteAllChildrenOlderThan(age);
+    }
+
     public void startApp() {
-        while (true) {
+        boolean exit = false;
+        while (!exit) {
             System.out.println("Select option: \n" +
                     "1 - create new family\n" +
                     "2 - create new random family\n" +
@@ -131,13 +181,43 @@ public class ConsoleApp {
                     break;
                 case 4:
                     System.out.print("Less than which number do you want: ");
-                    int l = readInt();
-                    tracker.getFamiliesLessThan(l);
+                    tracker.getFamiliesLessThan(readInt());
                     break;
                 case 5:
                     System.out.print("More than which number do you want: ");
-                    int m = readInt();
-                    tracker.getFamiliesLessThan(m);
+                    tracker.getFamiliesMoreThan(readInt());
+                    break;
+                case 6:
+                    System.out.print("What amount of members do you want: ");
+                    System.out.println("Families with this amount of members: " + tracker.countFamiliesWithMemberNumber(readInt()));
+                    break;
+                case 7:
+                    System.out.println("Which family do you want to delete: ");
+                    FamilyService.families.remove(readIndex(0, FamilyService.families.size() - 1));
+                    break;
+                case 8:
+                    System.out.println("What do you want? 1 - born child, 2 - adopt child");
+                    switch (readInt()) {
+                        case 1:
+                            System.out.println("Select a family by index: ");
+                            bornChild(readIndex(0, FamilyService.families.size() - 1));
+                            break;
+                        case 2:
+                            System.out.println("Select a family by index: ");
+                            adoptChild(readIndex(0, FamilyService.families.size() - 1));
+                            break;
+                    }
+                    break;
+                case 9:
+                    System.out.println("Older than which number do you want: ");
+                    deleteOlderThan(readInt());
+                    break;
+                case 10:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Unknown option");
+                    break;
             }
         }
     }

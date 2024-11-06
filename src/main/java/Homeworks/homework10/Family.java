@@ -87,22 +87,55 @@ public class Family {
     }
 
     @Override
-    public String toString() {
-        if (countOfMembers == 2)
-            return "Family: mother: '%s %s', father: '%s %s'"
-                    .formatted(mother.getName(), mother.getSurname(), father.getName(), father.getSurname());
-        else {
-            String out = "Family: mother: '%s %s', father: '%s %s', children:"
-                    .formatted(mother.getName(), mother.getSurname(), father.getName(), father.getSurname());
-            for (Human child : children)
-                out += " '%s'".formatted(child.getName());
-
-            if (pet != null)
-                out += " pet: %s ".formatted(pet.toString());
-
-            return out;
+    public String toString(){
+        String out  = "";
+        out += "         mother: {name='%s', surname='%s', birthDate='%s', iq=%d, schedule="
+                .formatted(mother.getName(), mother.getSurname(), mother.getStringDate(), mother.getIq());
+        if (mother.getSchedule() != null)
+            out += mother.getSchedule();
+        out += "}\n";
+        out += "         father: {name='%s', surname='%s', birthDate='%s', iq=%d, schedule="
+                .formatted(father.getName(), father.getSurname(), father.getStringDate(), father.getIq());
+        if (father.getSchedule() != null)
+            out += father.getSchedule();
+        out += "}\n";
+        if (children.size() > 0)
+            out += "         children:\n";
+        for (Human child : children) {
+            if (child instanceof Man)
+                out += "                  boy: ";
+            else
+                out += "                  girl: ";
+            out += "{name='%s', surname='%s', birthDate='%s', iq=%d, schedule="
+                    .formatted(child.getName(), child.getSurname(), child.getStringDate(), child.getIq());
+            if (child.getSchedule() != null)
+                out += child.getSchedule();
+            out += "}\n";
         }
+
+        if (pet != null)
+            out += "         pet: " + pet.toString();
+
+        return out;
     }
+
+//    @Override
+//    public String toString() {
+//        if (countOfMembers == 2)
+//            return "Family: mother: '%s %s', father: '%s %s'"
+//                    .formatted(mother.getName(), mother.getSurname(), father.getName(), father.getSurname());
+//        else {
+//            String out = "Family: mother: '%s %s', father: '%s %s', children:"
+//                    .formatted(mother.getName(), mother.getSurname(), father.getName(), father.getSurname());
+//            for (Human child : children)
+//                out += " '%s'".formatted(child.getName());
+//
+//            if (pet != null)
+//                out += " pet: %s ".formatted(pet.toString());
+//
+//            return out;
+//        }
+//    }
 
     @Override
     public boolean equals(Object o) {
