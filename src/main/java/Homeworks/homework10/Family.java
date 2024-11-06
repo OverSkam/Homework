@@ -38,8 +38,6 @@ public class Family {
     }
 
     public void deleteAllChildrenOlderThan(int x){
-        System.out.println(this.children.size());
-
         int size = this.children.size();
         int i = 0;
         long y = (long) x * 365 * 24 * 60 * 60 * 1000;
