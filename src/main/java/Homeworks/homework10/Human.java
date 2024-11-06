@@ -71,7 +71,8 @@ public class Human {
     public void setPet(Pet pet){ this.family.setPet(pet);}
     public Family getFamily(){ return family;}
     public void setFamily(Family family) { this.family = family;}
-
+    public Map<Days, String> getSchedule() { return this.schedule; }
+    public String getStringDate(){ return this.stringDate; }
 
     public void addTaskToSchedule(Days day, String task) {
         schedule.put(day, task);

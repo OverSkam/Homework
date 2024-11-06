@@ -70,7 +70,8 @@ abstract class Pet {
 
     @Override
     public String toString() {
-        String out = "{nickname: '%s', age: %s, trickLevel: %s"
+        String out = "{species: " + species.name();
+         out += " nickname: '%s', age: %s, trickLevel: %s"
                 .formatted(nickname, age, trickLevel);
         if (!habits.isEmpty()) {
             out += ", habits:";

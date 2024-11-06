@@ -6,7 +6,13 @@ public class FamilyService {
     static ArrayList<Family> families = new ArrayList<>();
 
     public void displayAllFamilies(){
-        families.forEach(System.out::println);
+        int familyIndex = 1;
+        for (Family family : families) {
+            System.out.printf("Family #%d", familyIndex);
+            System.out.println();
+            System.out.println(family.prettyFormat());
+            familyIndex++;
+        }
     }
 
     public void getFamiliesBiggerThan(int x){
