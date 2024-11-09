@@ -1,5 +1,7 @@
 package Homeworks.homework11;
 
+import java.io.IOException;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -155,6 +157,7 @@ public class ConsoleApp {
 
     public void startApp() {
         boolean exit = false;
+        FamilyTxtFileDAO fileTxt = new FamilyTxtFileDAO();
         while (!exit) {
             System.out.println("Select option: \n" +
                     "1 - create new family\n" +
@@ -166,7 +169,9 @@ public class ConsoleApp {
                     "7 - delete family by index\n" +
                     "8 - edit family by index\n" +
                     "9 - delete all children older than\n" +
-                    "10 - exit");
+                    "10 - load from file\n" +
+                    "11 - save to file\n" +
+                    "12 - exit application");
             int x = sc.nextInt();
             switch (x) {
                 case 1:
@@ -212,6 +217,21 @@ public class ConsoleApp {
                     deleteOlderThan(readInt());
                     break;
                 case 10:
+                    FamilyService.families.clear();
+                    try {
+                        FamilyService.families = fileTxt.loadAll();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case 11:
+                    try {
+                        fileTxt.save(FamilyService.families);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case 12:
                     exit = true;
                     break;
                 default:
