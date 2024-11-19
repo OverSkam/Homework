@@ -10,39 +10,49 @@ public class AviaTicketsService {
     AviaRaceDAO userRaces = new AviaRaceTxtDAO("user-races.txt");
 
     public void saveToUsersRaces(AviaRace aviaRace) throws IOException{
-        userRaces.save(aviaRace);
+        userRaces.saveRace(aviaRace);
+    }
+
+    public void reserveRace(String name, String surname, long id) throws IOException{
+        userRaces.saveInfo("%s|%s|%d".formatted(name, surname, id));
+    }
+
+    public List<Optional<AviaRace>> loadAllUsersRaces(String name, String surname) throws IOException{
+        List<String> loaded = userRaces.loadAllInfo();
+        return loaded.stream()
+                .filter(x -> x.split("\\|")[0].equals(name) && x.split("\\|")[1].equals(surname))
+                .map(x -> {
+                    try {
+                        return allRaces.loadRace(Long.parseLong(x.split("\\|")[2]));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .filter(Optional::isPresent)
+                .toList();
     }
 
     public void updateUserRaces(AviaRace aviaRace) throws IOException {
-        List<AviaRace> modified = userRaces.loadAll().stream()
+        List<AviaRace> modified = userRaces.loadAllRaces().stream()
                 .map(m -> m.getId() == aviaRace.getId() ? aviaRace : m)
                 .toList();
-        userRaces.update(aviaRace);
+        userRaces.updateRace(aviaRace);
     }
 
     public void delete(Long id) throws IOException {
-        userRaces.loadAll().remove(id);
-        userRaces.delete(id);
-    }
-
-    public Optional<AviaRace> loadUserRaceById(long id) throws IOException{
-        return userRaces.load(id);
-    }
-
-    public List<AviaRace> loadAllUserRaces() throws IOException{
-       return userRaces.loadAll();
+        userRaces.deleteRace(id);
     }
 
     public List<AviaRace> loadAllRaces() throws IOException{
-        return allRaces.loadAll();
+        return allRaces.loadAllRaces();
     }
 
     public Optional<AviaRace> findRaceById(long id) throws IOException{
-        return allRaces.load(id);
+        return allRaces.loadRace(id);
     }
 
     public List<AviaRace> findRacesByDestination(String destination) throws IOException{
-        return allRaces.loadAll().stream()
+        return allRaces.loadAllRaces().stream()
                 .filter(ar -> ar.getDestination().equals(destination))
                 .toList();
     }

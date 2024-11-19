@@ -1,6 +1,7 @@
 package StepProject1;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,6 +35,7 @@ public class ConsoleRepresentation {
                     row[0], row[1], row[2], row[3], row[4]));
         }
         System.out.println("----------------------------------------------------------------------------------");
+        //String skip1 = sc.nextLine();
     }
 
     public void output(String[] row) {
@@ -59,6 +61,7 @@ public class ConsoleRepresentation {
             System.out.println(String.format("| %-4s | %s | %s | %s | %s |",
                     row[0], row[1], row[2], row[3], row[4]));
         System.out.println("----------------------------------------------------------------------------------");
+        String skip1 = sc.nextLine();
     }
 
     private int readInt() {
@@ -91,6 +94,47 @@ public class ConsoleRepresentation {
         return number;
     }
 
+    private void findAndReserve() throws IOException {
+        System.out.println("Enter flight destination: ");
+        String destination = sc.next();
+        System.out.println("Enter flight date: ");
+        String date = sc.next();
+        System.out.println("Enter flight time: ");
+        String time = sc.next();
+        System.out.println("Enter required amount of seats: ");
+        int seats = readInt();
+
+        List<AviaRace> modified = controller.loadAllRaces().stream()
+                .filter(m -> m.getDestination().equals(destination))
+                .filter(m -> m.getDate().equals(date))
+                .filter(m -> m.getTime().equals(time))
+                .filter(m -> m.getFreeSeats() >= seats)
+                .toList();
+        List<String> modifiedString = modified.stream()
+                .map(AviaRace::represent)
+                .toList();
+        List<String[]> list = new ArrayList<>();
+        for (String str : modifiedString) {
+            list.add(str.split("\\|"));
+        }
+
+        if (!list.isEmpty()) {
+            output(list);
+            System.out.println("Which flight do you want to reserve or press 0 to exit?");
+            int choice = readInt();
+            System.out.print("Enter your name: ");
+            String name = sc.next();
+            System.out.print("Enter your surname: ");
+            String surname = sc.next();
+            controller.reserveRace(name, surname, choice);
+            System.out.println("Flight reserved!");
+        }
+        else {
+            System.out.println("No matches found");
+        }
+        String skip1 = sc.nextLine();
+    }
+
     public void StartApp() throws IOException {
         boolean exit = false;
 
@@ -111,6 +155,20 @@ public class ConsoleRepresentation {
                     System.out.println("Enter flight number:");
                     output(controller.IndexedRaceStringRepresentation(readInt()));
                     break;
+                case "3":
+                    findAndReserve();
+                    break;
+                case "4":
+                    System.out.println("Enter flight number: ");
+                    controller.deleteReservation(readInt());
+                    break;
+                case "5":
+                    System.out.print("Enter your name:");
+                    String name = sc.next();
+                    System.out.print("Enter your surname: ");
+                    String surname = sc.next();
+                    output(controller.userRacesStringRepresentation(name, surname));
+                    break;
                 case "6":
                     exit = true;
                     break;
@@ -118,8 +176,11 @@ public class ConsoleRepresentation {
                     System.out.println("Unknown option");
                     break;
             }
+            if (exit)
+                break;
             System.out.println("Press enter to continue...");
             String skip = sc.nextLine();
+
         }
     }
 }

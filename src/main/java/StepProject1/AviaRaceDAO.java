@@ -7,22 +7,37 @@ import java.util.Optional;
 
 interface AviaRaceDAO{
 
-    default void save(List<AviaRace> ars) throws IOException {
+    default void saveRace(List<AviaRace> ars) throws IOException {
         throw new IllegalArgumentException("TODO");
     }
-    default void save(AviaRace ar) throws IOException {
+    default void saveRace(AviaRace ar) throws IOException {
         throw new IllegalArgumentException("TODO");
     }
-    default void update(AviaRace ar) throws IOException {
+    default void updateRace(AviaRace ar) throws IOException {
         throw new IllegalArgumentException("TODO");
     }
-    default void delete(Long id) throws IOException {
+    default void deleteRace(Long id) throws IOException {
         throw new IllegalArgumentException("TODO");
     }
-    default Optional<AviaRace> load(long id) throws IOException {
+    default Optional<AviaRace> loadRace(long id) throws IOException {
         throw new IllegalArgumentException("TODO");
     }
-    default List<AviaRace> loadAll() throws IOException {
+    default List<AviaRace> loadAllRaces() throws IOException {
+        throw new IllegalArgumentException("TODO");
+    }
+    default void saveInfo(List<String> strs) throws IOException {
+        throw new IllegalArgumentException("TODO");
+    }
+    default void saveInfo(String str) throws IOException {
+        throw new IllegalArgumentException("TODO");
+    }
+    default void deleteInfo(Long id) throws IOException {
+        throw new IllegalArgumentException("TODO");
+    }
+    default Optional<String> loadInfo(long id) throws IOException {
+        throw new IllegalArgumentException("TODO");
+    }
+    default List<String> loadAllInfo() throws IOException {
         throw new IllegalArgumentException("TODO");
     }
 }
