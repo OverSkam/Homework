@@ -31,6 +31,11 @@ public class AviaRace {
         return new AviaRace(Integer.parseInt(data[0]), data[1], data[2], data[3], Integer.parseInt(data[4]));
     }
 
+    public AviaRace decreaseSeats(){
+        this.freeSeats--;
+        return this;
+    }
+
     public String represent(){
         return String.format("%d|%s|%s|%s|%d", id, destination, date, time, freeSeats);
     }

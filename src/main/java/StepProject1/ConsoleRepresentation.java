@@ -42,24 +42,24 @@ public class ConsoleRepresentation {
         System.out.println("----------------------------------------------------------------------------------");
         System.out.println("| ID   | Destination         | Departure Date | Departure Time | Available Seats |");
         System.out.println("----------------------------------------------------------------------------------");
-            int l = 19 - row[1].length();
-            for (int i = 0; i < l; i++) {
-                row[1] += " ";
-            }
-            l = 14 - row[2].length();
-            for (int i = 0; i < l; i++) {
-                row[2] += " ";
-            }
-            l = 14 - row[3].length();
-            for (int i = 0; i < l; i++) {
-                row[3] += " ";
-            }
-            l = 15 - row[4].length();
-            for (int i = 0; i < l; i++) {
-                row[4] += " ";
-            }
-            System.out.println(String.format("| %-4s | %s | %s | %s | %s |",
-                    row[0], row[1], row[2], row[3], row[4]));
+        int l = 19 - row[1].length();
+        for (int i = 0; i < l; i++) {
+            row[1] += " ";
+        }
+        l = 14 - row[2].length();
+        for (int i = 0; i < l; i++) {
+            row[2] += " ";
+        }
+        l = 14 - row[3].length();
+        for (int i = 0; i < l; i++) {
+            row[3] += " ";
+        }
+        l = 15 - row[4].length();
+        for (int i = 0; i < l; i++) {
+            row[4] += " ";
+        }
+        System.out.println(String.format("| %-4s | %s | %s | %s | %s |",
+                row[0], row[1], row[2], row[3], row[4]));
         System.out.println("----------------------------------------------------------------------------------");
         String skip1 = sc.nextLine();
     }
@@ -126,10 +126,16 @@ public class ConsoleRepresentation {
             String name = sc.next();
             System.out.print("Enter your surname: ");
             String surname = sc.next();
-            controller.reserveRace(name, surname, choice);
+            controller.reserveRace(choice, name, surname);
+            for (int i = 0; i < seats - 1; i++) {
+                System.out.print("Enter passenger's name: ");
+                name = sc.next();
+                System.out.print("Enter passenger's surname: ");
+                surname = sc.next();
+                controller.reserveRace(choice, name, surname);
+            }
             System.out.println("Flight reserved!");
-        }
-        else {
+        } else {
             System.out.println("No matches found");
         }
         String skip1 = sc.nextLine();
@@ -147,6 +153,8 @@ public class ConsoleRepresentation {
                     "5 - my flights\n" +
                     "6 - exit");
             String in = sc.nextLine();
+            String name;
+            String surname;
             switch (in) {
                 case "1":
                     output(controller.allRacesStringRepresentation());
@@ -159,14 +167,19 @@ public class ConsoleRepresentation {
                     findAndReserve();
                     break;
                 case "4":
+                    System.out.println("Enter your name: ");
+                    name = sc.next();
+                    System.out.println("Enter your surname: ");
+                    surname = sc.next();
                     System.out.println("Enter flight number: ");
-                    controller.deleteReservation(readInt());
+                    controller.deleteReservation(readInt(), name, surname);
+                    String skip = sc.nextLine();
                     break;
                 case "5":
                     System.out.print("Enter your name:");
-                    String name = sc.next();
+                    name = sc.next();
                     System.out.print("Enter your surname: ");
-                    String surname = sc.next();
+                    surname = sc.next();
                     output(controller.userRacesStringRepresentation(name, surname));
                     break;
                 case "6":

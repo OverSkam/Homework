@@ -13,12 +13,13 @@ public class AviaTicketsController {
         return service.loadAllRaces();
     }
 
-    public void reserveRace(String name, String surname, long id) throws IOException{
-        service.reserveRace(name, surname, id);
+    public void reserveRace(long id, String name, String surname) throws IOException{
+        service.reserveRace(id, name, surname);
+        service.updateRace(id);
     }
 
-    public void deleteReservation(long id) throws IOException{
-        service.delete(id);
+    public void deleteReservation(long id, String name, String surname) throws IOException{
+        service.delete(id, name, surname);
     }
 
     public List<String[]> allRacesStringRepresentation() throws IOException {
